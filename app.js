@@ -8,10 +8,12 @@ var sequelize = require("sequelize")
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
-var conection = require ("./connection");
+var conection = require("./connection");
 var config = require("./config");
 
 var app = express();
+
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -53,8 +55,8 @@ app.use(function(req, res, next) {
 
 
 conection.sequelize.sync().then(function() {
-  app.listen(config.API_PORT, function() {
-      console.log('Express server listening on port ' + config.API_PORT);
+    app.listen(config.API_PORT, function() {
+        console.log('Express server listening on port ' + config.API_PORT);
     });
 });
 
