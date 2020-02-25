@@ -43,7 +43,7 @@ class userController {
     async addUser(req,res){
         try{
             const { first_name, last_name , email, password, adress } = req.body
-            var User= await pool.query('INSERT INTO person(id_person ,first_name,last_name,email, password, adress) VALUES (35,$1, $2, $3, $4, $5) RETURNING *',[first_name,last_name, email,password,adress]);
+            var User= await pool.query('INSERT INTO person(first_name,last_name,email, password, adress) VALUES ($1, $2, $3, $4, $5) RETURNING *',[first_name,last_name, email,password,adress]);
             return res.status(200).json(User.rows);
         } catch (err) {
             console.log(err)
