@@ -1,7 +1,7 @@
 /* Logico: */
 
 CREATE TABLE Person (
-    id_person INTEGER PRIMARY KEY,
+    id_person SERIAL INTEGER PRIMARY KEY,
     first_name VARCHAR(30),
     last_name VARCHAR(30),
     email VARCHAR(30),
@@ -10,13 +10,13 @@ CREATE TABLE Person (
 );
 
 CREATE TABLE Establishment (
-    id_estabilishiment INTEGER PRIMARY KEY,
+    id_estabilishiment SERIAL INTEGER PRIMARY KEY,
     name_estab VARCHAR (30),
     delivery_fee float(20)
 );
 
 CREATE TABLE Dish (
-    id_dish INTEGER PRIMARY KEY,
+    id_dish SERIAL INTEGER PRIMARY KEY,
     type_dish VARCHAR (30),
     name_dish VARCHAR (30),
     value_dish float(20),
@@ -24,15 +24,15 @@ CREATE TABLE Dish (
 );
 
 CREATE TABLE Notification_center (
-    id_notification INTEGER PRIMARY KEY
+    id_notification SERIAL INTEGER PRIMARY KEY
 );
 
 CREATE TABLE Coupon (
-    id_coupon INTEGER PRIMARY KEY
+    id_coupon SERIAL INTEGER PRIMARY KEY
 );
 
 CREATE TABLE buy (
-    id_buy INTEGER PRIMARY KEY,
+    id_buy SERIAL INTEGER PRIMARY KEY,
     order_date TIMESTAMP,
     rate INTEGER
 );
