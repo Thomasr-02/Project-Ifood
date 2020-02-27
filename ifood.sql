@@ -6,7 +6,16 @@ CREATE TABLE Person (
     last_name VARCHAR(30),
     email VARCHAR(30),
     password VARCHAR(50),
-    adress VARCHAR(100)
+    adress INTEGER
+);
+
+
+CREATE TABLE adress(
+    id_adress SERIAL PRIMARY KEY INTEGER,
+    city VARCHAR(30),
+    neighborhood VARCHAR(30),
+    street VARCHAR(30),
+    number INTEGER
 );
 
 CREATE TABLE Establishment (
