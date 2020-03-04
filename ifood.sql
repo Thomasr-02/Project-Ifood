@@ -1,49 +1,52 @@
 /* Logico: */
 
 CREATE TABLE Person (
-    id_person SERIAL INTEGER PRIMARY KEY,
     first_name VARCHAR(30),
     last_name VARCHAR(30),
     email VARCHAR(30),
     password VARCHAR(50),
-    adress INTEGER
+	id_adress INTEGER,
+	id_person SERIAL PRIMARY KEY
+	
 );
 
-
 CREATE TABLE adress(
-    id_adress SERIAL PRIMARY KEY INTEGER,
     city VARCHAR(30),
     neighborhood VARCHAR(30),
     street VARCHAR(30),
-    number INTEGER
+    number INTEGER,
+	id_adress SERIAL PRIMARY KEY,
+	FOREIGN KEY (id_adress) REFERENCES adress(id_adress)
 );
 
 CREATE TABLE Establishment (
-    id_estabilishiment SERIAL INTEGER PRIMARY KEY,
+    id_estabilishiment SERIAL PRIMARY KEY,
     name_estab VARCHAR (30),
     delivery_fee float(20)
 );
 
 CREATE TABLE Dish (
-    id_dish SERIAL INTEGER PRIMARY KEY,
+    id_dish SERIAL PRIMARY KEY,
     type_dish VARCHAR (30),
     name_dish VARCHAR (30),
     value_dish float(20),
     description_dish VARCHAR (300)
+    category VARCHAR (300)
 );
 
 CREATE TABLE Notification_center (
-    id_notification SERIAL INTEGER PRIMARY KEY
+    id_notification SERIAL PRIMARY KEY
 );
 
 CREATE TABLE Coupon (
-    id_coupon SERIAL INTEGER PRIMARY KEY
+    id_coupon SERIAL PRIMARY KEY
 );
 
 CREATE TABLE buy (
-    id_buy SERIAL INTEGER PRIMARY KEY,
+    id_buy SERIAL PRIMARY KEY,
     order_date TIMESTAMP,
-    rate INTEGER
+    rate INTEGER,
+    fast_buy BOOLEAN
 );
 
 CREATE TABLE Dish_Establishment (

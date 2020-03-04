@@ -3,15 +3,17 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
-
 const usersRouter = require('./routes/users');
+const app = express();
+const handlebars = require("express-handlebars");
 
+var controllerUser = require('./controllers/controllerUser')
 
-
-var app = express();
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+//app.set('views', path.join(__dirname, 'views'));
+// app.set('view engine', 'jade');
+app.engine('handlebars', handlebars({ defaultLayouts: 'main' }))
+app.set('view engine', 'handlebars')
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -19,8 +21,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// rotes
 app.use('/', usersRouter);
-
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -32,19 +34,16 @@ const pool = new Pool({
     host: '127.0.0.1',
     port: 5432,
     user: 'postgres',
-    password: '12345678',
+    password: '123456',
     database: 'postgres'
 })
-
 
 pool.connect(function(err) {
     if (err) return console.log(err);
     console.log('conected database!');
 })
 
-
-
-// error handler
+//error handler
 app.use(function(err, req, res, next) {
     // set locals, only providing error in development
     res.locals.message = err.message;
@@ -54,5 +53,6 @@ app.use(function(err, req, res, next) {
     res.status(err.status || 500);
     res.render('error');
 });
+
 
 module.exports = app;
