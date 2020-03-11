@@ -9,7 +9,7 @@ const pool = new Pool({
     host: '127.0.0.1',
     port: 5432,
     user: 'postgres',
-    password: '123456',
+    password: '12345678',
     database: 'postgres2'
 })
 
@@ -38,15 +38,11 @@ class userController {
             var password = (req.password);
             console.log(email);
             console.log(password);
-            var Login = await pool.query('SELECT * FROM person WHERE email=$1 and password=$2',[email,password]).then((res)=>{
-                console.log(res)
-                if(res["rowCount"]!=0){
-                    return true;
-                }else {
-                    return false;
-                }
-                }
-            )
+            var Login = await pool.query('SELECT * FROM person WHERE email=$1 and password=$2',[email,password])
+            return Login;
+            
+                
+            
     }
     
 

@@ -40,15 +40,16 @@ const pool = new Pool({
     host: '127.0.0.1',
     port: 5432,
     user: 'postgres',
-    password: '123456',
+    password: '12345678',
     database: 'postgres2'
 })
 
 pool.connect(function(err) {
     if (err) return console.log(err);
     console.log('conected database!');
-})
 
+})
+console.log("Api rodando port 3000!");
 //error handler
 app.use(function(err, req, res, next) {
     // set locals, only providing error in development
