@@ -1,41 +1,42 @@
-/* Logico: */
+/* Lógico_1: */
 
-CREATE TABLE Person (
-    first_name VARCHAR(30),
-    last_name VARCHAR(30),
-    email VARCHAR(30),
-    password VARCHAR(50),
-	id_adress INTEGER,
-	id_person SERIAL PRIMARY KEY
-	
-);
 
-CREATE TABLE adress(
+CREATE TABLE adress_person (
+    id_adress SERIAL PRIMARY KEY,
     city VARCHAR(30),
     neighborhood VARCHAR(30),
     street VARCHAR(30),
-    number INTEGER,
-	id_adress SERIAL PRIMARY KEY,
-	FOREIGN KEY (id_adress) REFERENCES adress(id_adress)
+    number INT
 );
 
-CREATE TABLE Establishment (
-    id_estabilishiment SERIAL PRIMARY KEY,
+CREATE TABLE Person (
+    id_person SERIAL PRIMARY KEY,
+    first_name VARCHAR(30),
+    last_name VARCHAR(30),
+    email VARCHAR(30),
+    password CHAR(30),
+	id_idAdress int,
+	FOREIGN KEY (id_idAdress) REFERENCES adress_person(id_adress)
+);
+
+
+
+
+
+CREATE TABLE establishment (
+    id_estabilishment SERIAL PRIMARY KEY,
     name_estab VARCHAR (30),
-    delivery_fee float(20)
+    delivery_free float(20),
+    category CHAR(30),
+    balance INT
 );
 
-CREATE TABLE Dish (
+CREATE TABLE dish (
     id_dish SERIAL PRIMARY KEY,
     type_dish VARCHAR (30),
     name_dish VARCHAR (30),
     value_dish float(20),
     description_dish VARCHAR (300)
-    category VARCHAR (300)
-);
-
-CREATE TABLE Notification_center (
-    id_notification SERIAL PRIMARY KEY
 );
 
 CREATE TABLE Coupon (
@@ -44,119 +45,107 @@ CREATE TABLE Coupon (
 
 CREATE TABLE buy (
     id_buy SERIAL PRIMARY KEY,
-    order_date TIMESTAMP,
     rate INTEGER,
-    fast_buy BOOLEAN
+    value INT
 );
 
-CREATE TABLE Dish_Establishment (
-    fk_Dish_id_dish INTEGER,
-    fk_Establishment_id_estabilishiment INTEGER,
-    id SERIAL PRIMARY KEY
+
+
+CREATE TABLE adress_est (
+    street CHAR,
+    city CHAR,
+    neighborhood CHAR,
+    number INT
 );
 
-CREATE TABLE Coupon_Establishment (
-    fk_Coupon_id_coupon INTEGER,
-    fk_Establishment_id_estabilishiment INTEGER,
-    id SERIAL PRIMARY KEY
+CREATE TABLE contain (
+    fk_establishment_id_estabilishment SERIAL,
+    fk_dish_id_dish SERIAL
 );
 
-CREATE TABLE Coupon_Person (
-    fk_Coupon_id_coupon INTEGER,
-    fk_Person_id_person INTEGER,
-    id SERIAL PRIMARY KEY
+CREATE TABLE send (
+    fk_Coupon_id_coupon SERIAL,
+    fk_establishment_id_estabilishment SERIAL
 );
 
-CREATE TABLE Person_Notification (
-    fk_Person_id_person INTEGER,
-    fk_Notification_center_id_notification INTEGER,
-    id SERIAL PRIMARY KEY
+CREATE TABLE recv (
+    fk_Coupon_id_coupon SERIAL,
+    fk_Person_id_person SERIAL
 );
 
-CREATE TABLE Establishment_Notification (
-    fk_Establishment_id_estabilishiment INTEGER,
-    fk_Notification_center_id_notification INTEGER,
-    id SERIAL PRIMARY KEY
+CREATE TABLE realize (
+    fk_Person_id_person SERIAL,
+    fk_buy_id_buy SERIAL,
+    date DATE
 );
 
-CREATE TABLE Person_Buy (
-    fk_Person_id_person INTEGER,
-    fk_buy_id_buy INTEGER,
-    id SERIAL PRIMARY KEY
+CREATE TABLE contain_buy_dish_establishment (
+    fk_buy_id_buy SERIAL,
+    fk_dish_id_dish SERIAL,
+    fk_establishment_id_estabilishment SERIAL
 );
 
-CREATE TABLE Dish_Buy (
-    fk_Dish_id_dish INTEGER,
-    fk_buy_id_buy INTEGER,
-    id SERIAL PRIMARY KEY
+CREATE TABLE Relacionamento_2 (
+    fk_establishment_id_estabilishment SERIAL
 );
  
-ALTER TABLE Dish_Establishment ADD CONSTRAINT FK_Dish_Establishment_1
-    FOREIGN KEY (fk_Dish_id_dish)
-    REFERENCES Dish (id_dish)
+
+ALTER TABLE contain ADD CONSTRAINT FK_contain_1
+    FOREIGN KEY (fk_establishment_id_estabilishment)
+    REFERENCES establishment (id_estabilishment)
+    ON DELETE RESTRICT;
+ 
+ALTER TABLE contain ADD CONSTRAINT FK_contain_2
+    FOREIGN KEY (fk_dish_id_dish)
+    REFERENCES dish (id_dish)
     ON DELETE SET NULL;
  
-ALTER TABLE Dish_Establishment ADD CONSTRAINT FK_Dish_Establishment_2
-    FOREIGN KEY (fk_Establishment_id_estabilishiment)
-    REFERENCES Establishment (id_estabilishiment)
-    ON DELETE SET NULL;
- 
-ALTER TABLE Coupon_Establishment ADD CONSTRAINT FK_Coupon_Establishment_1
+ALTER TABLE send ADD CONSTRAINT FK_send_1
     FOREIGN KEY (fk_Coupon_id_coupon)
     REFERENCES Coupon (id_coupon)
     ON DELETE SET NULL;
  
-ALTER TABLE Coupon_Establishment ADD CONSTRAINT FK_Coupon_Establishment_2
-    FOREIGN KEY (fk_Establishment_id_estabilishiment)
-    REFERENCES Establishment (id_estabilishiment)
+ALTER TABLE send ADD CONSTRAINT FK_send_2
+    FOREIGN KEY (fk_establishment_id_estabilishment)
+    REFERENCES establishment (id_estabilishment)
     ON DELETE SET NULL;
  
-ALTER TABLE Coupon_Person ADD CONSTRAINT FK_Coupon_Person_1
+ALTER TABLE recv ADD CONSTRAINT FK_recv_1
     FOREIGN KEY (fk_Coupon_id_coupon)
     REFERENCES Coupon (id_coupon)
     ON DELETE SET NULL;
  
-ALTER TABLE Coupon_Person ADD CONSTRAINT FK_Coupon_Person_2
+ALTER TABLE recv ADD CONSTRAINT FK_recv_2
     FOREIGN KEY (fk_Person_id_person)
     REFERENCES Person (id_person)
     ON DELETE SET NULL;
  
-ALTER TABLE Person_Notification ADD CONSTRAINT FK_Person_Notification_1
-    FOREIGN KEY (fk_Person_id_person)
-    REFERENCES Person (id_person)
-    ON DELETE RESTRICT;
- 
-ALTER TABLE Person_Notification ADD CONSTRAINT FK_Person_Notification_2
-    FOREIGN KEY (fk_Notification_center_id_notification)
-    REFERENCES Notification_center (id_notification)
-    ON DELETE SET NULL;
- 
-ALTER TABLE Establishment_Notification ADD CONSTRAINT FK_Establishment_Notification_1
-    FOREIGN KEY (fk_Establishment_id_estabilishiment)
-    REFERENCES Establishment (id_estabilishiment)
-    ON DELETE RESTRICT;
- 
-ALTER TABLE Establishment_Notification ADD CONSTRAINT FK_Establishment_Notification_2
-    FOREIGN KEY (fk_Notification_center_id_notification)
-    REFERENCES Notification_center (id_notification)
-    ON DELETE SET NULL;
- 
-ALTER TABLE Person_Buy ADD CONSTRAINT FK_Person_Buy_1
+ALTER TABLE realize ADD CONSTRAINT FK_realize_1
     FOREIGN KEY (fk_Person_id_person)
     REFERENCES Person (id_person)
     ON DELETE SET NULL;
  
-ALTER TABLE Person_Buy ADD CONSTRAINT FK_Person_Buy_2
+ALTER TABLE realize ADD CONSTRAINT FK_realize_2
     FOREIGN KEY (fk_buy_id_buy)
     REFERENCES buy (id_buy)
     ON DELETE SET NULL;
  
-ALTER TABLE Dish_Buy ADD CONSTRAINT FK_Dish_Buy_1
-    FOREIGN KEY (fk_Dish_id_dish)
-    REFERENCES Dish (id_dish)
-    ON DELETE RESTRICT;
- 
-ALTER TABLE Dish_Buy ADD CONSTRAINT FK_Dish_Buy_2
+ALTER TABLE contain_buy_dish_establishment ADD CONSTRAINT FK_contain_buy_dish_establishment_1
     FOREIGN KEY (fk_buy_id_buy)
     REFERENCES buy (id_buy)
+    ON DELETE NO ACTION;
+ 
+ALTER TABLE contain_buy_dish_establishment ADD CONSTRAINT FK_contain_buy_dish_establishment_2
+    FOREIGN KEY (fk_dish_id_dish)
+    REFERENCES dish (id_dish)
+    ON DELETE NO ACTION;
+ 
+ALTER TABLE contain_buy_dish_establishment ADD CONSTRAINT FK_contain_buy_dish_establishment_3
+    FOREIGN KEY (fk_establishment_id_estabilishment)
+    REFERENCES establishment (id_estabilishment)
+    ON DELETE NO ACTION;
+ 
+ALTER TABLE Relacionamento_2 ADD CONSTRAINT FK_Relacionamento_2_1
+    FOREIGN KEY (fk_establishment_id_estabilishment)
+    REFERENCES establishment (id_estabilishment)
     ON DELETE SET NULL;

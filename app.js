@@ -3,7 +3,12 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
+
+
 const usersRouter = require('./routes/users');
+const authRouter = require('./routes/auth');
+
+
 const app = express();
 const handlebars = require("express-handlebars");
 
@@ -23,6 +28,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // rotes
 app.use('/', usersRouter);
+app.use('/', authRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -35,7 +41,7 @@ const pool = new Pool({
     port: 5432,
     user: 'postgres',
     password: '123456',
-    database: 'postgres'
+    database: 'postgres2'
 })
 
 pool.connect(function(err) {
