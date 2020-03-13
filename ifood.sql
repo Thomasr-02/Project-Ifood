@@ -14,21 +14,20 @@ CREATE TABLE Person (
     first_name VARCHAR(30),
     last_name VARCHAR(30),
     email VARCHAR(30),
-    password CHAR(30),
+    password VARCHAR(30),
 	id_idAdress int,
 	FOREIGN KEY (id_idAdress) REFERENCES adress_person(id_adress)
 );
 
 
-
-
-
 CREATE TABLE establishment (
     id_estabilishment SERIAL PRIMARY KEY,
     name_estab VARCHAR (30),
-    delivery_free float(20),
+    email VARCHAR(30),
+    password VARCHAR(30),
+    delivery_free BOOLEAN,
     category CHAR(30),
-    balance INT
+    balance float(20)
 );
 
 CREATE TABLE dish (

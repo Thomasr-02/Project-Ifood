@@ -1,15 +1,14 @@
 const { Pool } = require('pg')
-
 const { Router } = require('express');
-
 const { check, validationResult } = require('express-validator');
 const express = require('express');
+
 
 const pool = new Pool({
     host: '127.0.0.1',
     port: 5432,
     user: 'postgres',
-    password: '12345678',
+    password: '123456',
     database: 'postgres2'
 })
 
@@ -31,17 +30,14 @@ class userController {
             return res.status(400).json({ error: err.message });
         }   
     }
-    async Authenticate(req,res){
-        
 
-            var email = (req.email);
-            var password = (req.password);
-            console.log(email);
-            console.log(password);
-            var Login = await pool.query('SELECT * FROM person WHERE email=$1 and password=$2',[email,password])
-            return Login;
-            
-                
+    async Authenticate(req,res){
+        var email = (req.email);
+        var password = (req.password);
+        console.log(email);
+        console.log(password);
+        var Login = await pool.query('SELECT * FROM person WHERE email=$1 and password=$2',[email,password])
+        return Login;
             
     }
     

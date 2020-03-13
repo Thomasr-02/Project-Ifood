@@ -2,6 +2,7 @@
 const { check, validationResult } = require('express-validator');
 
 const User = require('./controllerUser');
+const Restaurante = require('./controllerUser');
 
 module.exports = {
     token : async function(req, res, next){

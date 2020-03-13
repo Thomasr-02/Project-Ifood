@@ -7,16 +7,16 @@ const logger = require('morgan');
 
 const usersRouter = require('./routes/users');
 const authRouter = require('./routes/auth');
+const restaurantesRouter = require('./routes/restaurantes');
 
 
 const app = express();
 const handlebars = require("express-handlebars");
 
 var controllerUser = require('./controllers/controllerUser')
+var controllerRestaurantes = require('./controllers/controllerRestaurantes')
 
-// view engine setup
-//app.set('views', path.join(__dirname, 'views'));
-// app.set('view engine', 'jade');
+
 app.engine('handlebars', handlebars({ defaultLayouts: 'main' }))
 app.set('view engine', 'handlebars')
 
@@ -29,6 +29,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // rotes
 app.use('/', usersRouter);
 app.use('/', authRouter);
+app.use('/', restaurantesRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -40,7 +41,7 @@ const pool = new Pool({
     host: '127.0.0.1',
     port: 5432,
     user: 'postgres',
-    password: '12345678',
+    password: '123456',
     database: 'postgres2'
 })
 

@@ -5,8 +5,8 @@ const controllerAuth	= require('../controllers/controllerAuth');
 const { check , validationResult } = require('express-validator');
 
 router.post('/login', [
-    check('email')		.isEmail(),
-    check('password')	.isLength({ min: 3 })
+    check('email').isEmail(),
+    check('password').isLength({ min: 3 })
 ], controllerAuth.token);
 
 module.exports = router;
