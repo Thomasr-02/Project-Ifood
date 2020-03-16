@@ -15,12 +15,23 @@ const pool = new Pool({
 class restauranteController {
     async findRestaurante(req, res) {       
         try {
-            var Restaurante = await pool.query('SELECT id_estabilishment, name_estab, email, password, delivery_free, category, balance FROM public.establishment;');
+            var Restaurante = await pool.query('SELECT id_estabilishment, name_estab, email, password, delivery_free, category, balance FROM public.establishment');
             return res.status(200).json(Restaurante["rows"]);
         } catch (err) {
             return res.status(400).json({ error: err.message });
         }
     }
+
+    async Authenticate(req,res){
+        var email = (req.email);
+        var password = (req.password);
+        console.log(email);
+        console.log(password);
+        var Login = await pool.query('SELECT * FROM establishment WHERE email=$1 and password=$2',[email,password])
+        return Login;
+            
+    }
+
     async findOneRestaurante(req,res){
         try{
             var id = parseInt(req.params.id)
@@ -43,7 +54,7 @@ class restauranteController {
 
     async addRestaurante(req,res){
         try{
-            const { name_estab, email, password, delivery_free, category, balance } = req.body //ja q adress é uma enteidade, precisa fazer uma query para cadastrar separado
+            const { name_estab, email, password, delivery_free, category, balance } = req.body 
             var Restaurante = await pool.query('INSERT INTO public.establishment (name_estab, email, password, delivery_free, category, balance) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *',[name_estab, email, password, delivery_free, category, balance]);
             return res.status(200).json(Restaurante["rows"]);
 

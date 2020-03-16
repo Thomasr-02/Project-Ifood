@@ -2,7 +2,7 @@
 const { check, validationResult } = require('express-validator');
 
 const User = require('./controllerUser');
-const Restaurante = require('./controllerUser');
+const Restaurante = require('./controllerRestaurantes');
 
 module.exports = {
     token : async function(req, res, next){
@@ -13,7 +13,13 @@ module.exports = {
                 return res.status(200).json(verific["rows"]);
             }
             else{
-                return res.status(401).json(false)
+                var verific =await Restaurante.Authenticate({email: req.body.email, password: req.body.password})
+                if(verific["rowCount"] !=0){
+                    return res.status(200).json(verific["rows"]);
+                }
+                else {
+                    return res.status(401).json(false)
+                }   
             }
         }
 };
