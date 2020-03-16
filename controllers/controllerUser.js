@@ -8,8 +8,8 @@ const pool = new Pool({
     host: '127.0.0.1',
     port: 5432,
     user: 'postgres',
-    password: '123456',
-    database: 'postgres2'
+    password: '12345678',
+    database: 'ifood'
 })
 
 class userController {
@@ -54,7 +54,8 @@ class userController {
 
     async addUser(req,res){
         try{
-            const { first_name, last_name , email, password } = req.body //ja q adress é uma enteidade, precisa fazer uma query para cadastrar separado
+            const {city, neighborhood, street, number, first_name, last_name , email, password } = req.body
+            var Adress = await pool.query('INSERT INTO adress_person(city, neighborhood, street, number) VALUES ($1, $2, $3, $4);',[city, neighborhood, street, number]);
             var User = await pool.query('INSERT INTO person(first_name, last_name, email, password) VALUES ($1, $2, $3, $4) RETURNING *',[first_name, last_name, email, password]);
             return res.status(200).json(User["rows"]);
 
