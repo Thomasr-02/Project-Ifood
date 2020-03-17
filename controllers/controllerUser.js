@@ -3,14 +3,11 @@ const { Router } = require('express');
 const { check, validationResult } = require('express-validator');
 const express = require('express');
 
-
-
-
 const pool = new Pool({
     host: '127.0.0.1',
     port: 5432,
     user: 'postgres',
-    password: '12345678',
+    password: '123456',
     database: 'postgres2'
 })
 
@@ -80,7 +77,5 @@ class userController {
         }   
     }    
 }
-
-
 
 module.exports = new userController();

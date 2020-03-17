@@ -26,6 +26,10 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+var cors = require('cors')
+
+app.use(cors())
+
 // rotes
 app.use('/', usersRouter);
 app.use('/', authRouter);
@@ -41,7 +45,7 @@ const pool = new Pool({
     host: '127.0.0.1',
     port: 5432,
     user: 'postgres',
-    password: '12345678',
+    password: '123456',
     database: 'postgres2'
 })
 
