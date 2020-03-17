@@ -10,14 +10,14 @@ const pool = new Pool({
     host: '127.0.0.1',
     port: 5432,
     user: 'postgres',
-    password: '123456',
+    password: '12345678',
     database: 'postgres2'
 })
 
 class userController {
     async findUsers(req, res) {       
         try {
-            var User = await pool.query('SELECT *FROM person');
+            var User = await pool.query('SELECT * FROM person INNER JOIN adress_person ON person.fk_adress_person_id_adress=adress_person.id_adress;');
             return res.status(200).json(User["rows"]);
         } catch (err) {
             return res.status(400).json({ error: err.message });
@@ -26,7 +26,7 @@ class userController {
     async findOneUser(req,res){
         try{
             var id = parseInt(req.params.id)
-            var User = await pool.query('SELECT * FROM person WHERE id_person = $1 ', [id])
+            var User = await pool.query('SELECT * FROM person INNER JOIN adress_person ON person.fk_adress_person_id_adress=adress_person.id_adress WHERE id_person = $1 ', [id])
             return res.status(200).json(User["rows"]);
         } catch (err) {
             return res.status(400).json({ error: err.message });
@@ -48,6 +48,7 @@ class userController {
         try{
             var id = parseInt(req.params.id)
             var User = await pool.query('DELETE FROM person WHERE id_person = $1 RETURNING *', [id])
+            //var Adress = await pool.query('DELETE FROM adress_person WHERE id_adress = $1', [id])
             return res.status(200).json(User.rows);
         } catch (err) {
             return res.status(400).json({ error: err.message });
