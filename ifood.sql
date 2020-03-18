@@ -26,7 +26,7 @@ CREATE TABLE dish (
     name_dish VARCHAR(30),
     value_dish FLOAT(20),
     description_dish VARCHAR(300),
-    fk_establishment_id_establishment SERIAL
+    fk_establishment_id_establishment INTEGER
 );
 
 CREATE TABLE coupon (

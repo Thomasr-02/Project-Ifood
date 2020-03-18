@@ -45,7 +45,11 @@ class userController {
 
     async addDish(req,res){
         try{
-            const {type_dish, name_dish, value_dish, description_dish, fk_establishment_id_establishment } = req.body
+            const { type_dish, 
+                    name_dish, 
+                    value_dish, 
+                    description_dish, 
+                    fk_establishment_id_establishment } = req.body
             var Dish = await pool.query('INSERT INTO dish(type_dish, name_dish, value_dish, description_dish, fk_establishment_id_establishment) VALUES ($1, $2, $3, $4, $5) RETURNING *', [type_dish, name_dish, value_dish, description_dish, fk_establishment_id_establishment]);
             return res.status(200).json(Dish["rows"]);
 
