@@ -14,6 +14,7 @@
         "express-validator": "^6.4.0",
         "http-errors": "~1.6.3",
         "jade": "~1.11.0",
+        "merge-json": "0.1.0-b.3",
         "morgan": "~1.9.1",
         "nodemon": "^2.0.2",
         "pg": "^7.18.1"

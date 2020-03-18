@@ -2,6 +2,7 @@ const { Pool } = require('pg')
 const { Router } = require('express');
 const { check, validationResult } = require('express-validator');
 const express = require('express');
+var mergeJSON = require("merge-json") ;
 
 const pool = new Pool({
     host: '127.0.0.1',
@@ -40,7 +41,6 @@ class userController {
             
     }
     
-
     async delUser(req,res){
         try{
             var id = parseInt(req.params.id)
@@ -55,15 +55,16 @@ class userController {
     async addUser(req,res){
         try{
             const {city, neighborhood, street, number, first_name, last_name , email, password } = req.body
-            var Adress = await pool.query('INSERT INTO adress_person(city, neighborhood, street, number) VALUES ($1, $2, $3, $4);',[city, neighborhood, street, number]);
+            var Adress = await pool.query('INSERT INTO adress_person(city, neighborhood, street, number) VALUES ($1, $2, $3, $4) RETURNING *;',[city, neighborhood, street, number]);
             var User = await pool.query('INSERT INTO person(first_name, last_name, email, password) VALUES ($1, $2, $3, $4) RETURNING *',[first_name, last_name, email, password]);
-            return res.status(200).json(User["rows"]);
+            var result = mergeJSON.merge(User["rows"], Adress["rows"]) ;
 
+            return res.status(200).json(result);
         } catch (err) {
             console.log(err)
             return res.status(400).json({ error: err.message });
         }   
-    }    
+    }
 
     async updUser(req,res){
         try{
