@@ -1,4 +1,4 @@
-/* Logico: */
+/* Lógico_1: */
 
 CREATE TABLE person (
     id_person SERIAL PRIMARY KEY,
@@ -10,11 +10,13 @@ CREATE TABLE person (
 );
 
 CREATE TABLE establishment (
-    id_estabilishment SERIAL PRIMARY KEY,
+    id_establishment SERIAL PRIMARY KEY,
     name_estab VARCHAR(30),
-    delivery_free FLOAT(20),
+    delivery_fee FLOAT(20),
     category VARCHAR(30),
     balance FLOAT(20),
+    email VARCHAR(30),
+    password VARCHAR(30),
     fk_adress_est_id_adress_est SERIAL
 );
 
@@ -24,7 +26,7 @@ CREATE TABLE dish (
     name_dish VARCHAR(30),
     value_dish FLOAT(20),
     description_dish VARCHAR(300),
-    fk_establishment_id_estabilishment SERIAL
+    fk_establishment_id_establishment SERIAL
 );
 
 CREATE TABLE coupon (
@@ -57,7 +59,7 @@ CREATE TABLE adress_est (
 
 CREATE TABLE establishment_coupon (
     fk_coupon_id_coupon SERIAL,
-    fk_establishment_id_estabilishment SERIAL
+    fk_establishment_id_establishment SERIAL
 );
 
 CREATE TABLE person_coupon (
@@ -88,8 +90,8 @@ ALTER TABLE establishment ADD CONSTRAINT FK_establishment_2
     ON DELETE SET NULL;
  
 ALTER TABLE dish ADD CONSTRAINT FK_dish_2
-    FOREIGN KEY (fk_establishment_id_estabilishment)
-    REFERENCES establishment (id_estabilishment)
+    FOREIGN KEY (fk_establishment_id_establishment)
+    REFERENCES establishment (id_establishment)
     ON DELETE CASCADE;
  
 ALTER TABLE establishment_coupon ADD CONSTRAINT FK_establishment_coupon_1
@@ -98,8 +100,8 @@ ALTER TABLE establishment_coupon ADD CONSTRAINT FK_establishment_coupon_1
     ON DELETE SET NULL;
  
 ALTER TABLE establishment_coupon ADD CONSTRAINT FK_establishment_coupon_2
-    FOREIGN KEY (fk_establishment_id_estabilishment)
-    REFERENCES establishment (id_estabilishment)
+    FOREIGN KEY (fk_establishment_id_establishment)
+    REFERENCES establishment (id_establishment)
     ON DELETE SET NULL;
  
 ALTER TABLE person_coupon ADD CONSTRAINT FK_person_coupon_1

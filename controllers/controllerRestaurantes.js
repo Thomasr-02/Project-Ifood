@@ -15,7 +15,7 @@ const pool = new Pool({
 class restauranteController {
     async findRestaurante(req, res) {       
         try {
-            var Restaurante = await pool.query('SELECT id_estabilishment, name_estab, email, password, delivery_free, category, balance FROM public.establishment');
+            var Restaurante = await pool.query('SELECT * FROM public.establishment INNER JOIN adress_est ON establishment.fk_adress_est_id_adress_est=adress_est.id_adress_est;');
             return res.status(200).json(Restaurante["rows"]);
         } catch (err) {
             return res.status(400).json({ error: err.message });
@@ -35,7 +35,7 @@ class restauranteController {
     async findOneRestaurante(req,res){
         try{
             var id = parseInt(req.params.id)
-            var Restaurante = await pool.query('SELECT * FROM estabilishment WHERE id_estabilishment = $1 ', [id])
+            var Restaurante = await pool.query('SELECT * FROM establishment WHERE id_establishment = $1 ', [id])
             return res.status(200).json(Restaurante["rows"]);
         } catch (err) {
             return res.status(400).json({ error: err.message });
@@ -45,7 +45,7 @@ class restauranteController {
     async delRestaurante(req,res){
         try{
             var id = parseInt(req.params.id)
-            var Restaurante = await pool.query('DELETE FROM establishment WHERE id_estabilishment = $1 RETURNING *', [id])
+            var Restaurante = await pool.query('DELETE FROM establishment WHERE id_establishment = $1 RETURNING *', [id])
             return res.status(200).json(Restaurante.rows);
         } catch (err) {
             return res.status(400).json({ error: err.message });
@@ -54,8 +54,9 @@ class restauranteController {
 
     async addRestaurante(req,res){
         try{
-            const { name_estab, email, password, delivery_free, category, balance } = req.body 
-            var Restaurante = await pool.query('INSERT INTO public.establishment (name_estab, email, password, delivery_free, category, balance) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *',[name_estab, email, password, delivery_free, category, balance]);
+            const {city, neighborhood, street, number, name_estab, email, password, delivery_fee, category, balance } = req.body 
+            var Adress = await pool.query('INSERT INTO adress_est(city, neighborhood, street, number) VALUES ($1, $2, $3, $4);',[city, neighborhood, street, number]);
+            var Restaurante = await pool.query('INSERT INTO public.establishment (name_estab, email, password, delivery_fee, category, balance) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *',[name_estab, email, password, delivery_fee, category, balance]);
             return res.status(200).json(Restaurante["rows"]);
 
         } catch (err) {
@@ -66,7 +67,7 @@ class restauranteController {
 
     async updRestaurante(req,res){
         try{
-            const { id_person,name_estab, delivery_free, category, balance } = req.body            
+            const { id_person,name_estab, delivery_fee, category, balance } = req.body            
             var Restaurante = await pool.query('UPDATE person SET first_name = $2, last_name = $3, email = $4, password = $5 WHERE id_person = $1 RETURNING *',
                 [id_person, first_name, last_name, email, password]);
             return res.status(200).json(Restaurante.rows);
