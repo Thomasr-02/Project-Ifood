@@ -9,6 +9,8 @@ const usersRouter = require('./routes/users');
 const authRouter = require('./routes/auth');
 const restaurantesRouter = require('./routes/restaurantes');
 const dishesRouter = require('./routes/dishes');
+const buysRouter = require('./routes/buys');
+const couponsRouter = require('./routes/coupons');
 
 const app = express();
 const handlebars = require("express-handlebars");
@@ -16,6 +18,8 @@ const handlebars = require("express-handlebars");
 var controllerUser = require('./controllers/controllerUser')
 var controllerRestaurantes = require('./controllers/controllerRestaurantes')
 var controllerDish = require('./controllers/controllerDish')
+var controllerBuy = require('./controllers/controllerBuy')
+var controllerCoupon = require('./controllers/controllerCoupon')
 
 app.engine('handlebars', handlebars({ defaultLayouts: 'main' }))
 app.set('view engine', 'handlebars')
@@ -35,6 +39,8 @@ app.use('/', usersRouter);
 app.use('/', authRouter);
 app.use('/', restaurantesRouter);
 app.use('/', dishesRouter);
+app.use('/', buysRouter);
+app.use('/', couponsRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

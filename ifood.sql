@@ -1,4 +1,4 @@
-/* Lógico_1: */
+/* LÃ³gico_1: */
 
 CREATE TABLE person (
     id_person SERIAL PRIMARY KEY,
@@ -58,24 +58,24 @@ CREATE TABLE adress_est (
 );
 
 CREATE TABLE establishment_coupon (
-    fk_coupon_id_coupon SERIAL,
-    fk_establishment_id_establishment SERIAL
+    fk_coupon_id_coupon INTEGER,
+    fk_establishment_id_establishment INTEGER
 );
 
 CREATE TABLE person_coupon (
-    fk_coupon_id_coupon SERIAL,
-    fk_person_id_person SERIAL
+    fk_coupon_id_coupon INTEGER,
+    fk_person_id_person INTEGER
 );
 
 CREATE TABLE person_buy (
-    fk_person_id_person SERIAL,
-    fk_buy_id_buy SERIAL,
+    fk_person_id_person INTEGER,
+    fk_buy_id_buy INTEGER,
     date TIMESTAMP
 );
 
 CREATE TABLE buy_dish (
-    fk_dish_id_dish SERIAL,
-    fk_buy_id_buy SERIAL,
+    fk_dish_id_dish INTEGER,
+    fk_buy_id_buy INTEGER,
     date TIMESTAMP
 );
  
