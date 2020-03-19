@@ -1,3 +1,4 @@
+/*Configs */
 const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
@@ -5,18 +6,16 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 
 
+/*rotas */
 const usersRouter = require('./routes/users');
 const authRouter = require('./routes/auth');
 const restaurantesRouter = require('./routes/restaurantes');
 const dishesRouter = require('./routes/dishes');
 
 const app = express();
+
+/*view engine */
 const handlebars = require("express-handlebars");
-
-var controllerUser = require('./controllers/controllerUser')
-var controllerRestaurantes = require('./controllers/controllerRestaurantes')
-var controllerDish = require('./controllers/controllerDish')
-
 app.engine('handlebars', handlebars({ defaultLayouts: 'main' }))
 app.set('view engine', 'handlebars')
 
@@ -41,14 +40,7 @@ app.use(function(req, res, next) {
     next(createError(404));
 });
 
-const { Pool, Client } = require('pg')
-const pool = new Pool({
-    host: '127.0.0.1',
-    port: 5432,
-    user: 'postgres',
-    password: '12345678',
-    database: 'postgres2'
-})
+const pool = require('./pool');
 
 pool.connect(function(err) {
     if (err) return console.log(err);
