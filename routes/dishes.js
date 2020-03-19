@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var controllerDish = require('../controllers/controllerDish')
-/* GET users listing. */
+/* GET dishs listing. */
 var cors = require('cors')
 
 router.get('/dishes',cors(), controllerDish.findDishes);
