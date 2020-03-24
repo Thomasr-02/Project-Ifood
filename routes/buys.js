@@ -5,7 +5,9 @@ var controllerBuy = require('../controllers/controllerBuy')
 
 router.get('/buys', controllerBuy.findBuys);
 router.get('/buys/:id', controllerBuy.findOneBuy);
+router.get('/buys/:id/dishes', controllerBuy.findBuyDishes);
 router.post('/buys', controllerBuy.addBuy);
+router.post('/buys/:id/dishes', controllerBuy.addDishOnBuy);
 router.delete('/buys/:id', controllerBuy.delBuy);
 router.put('/buys/:id', controllerBuy.updBuy);
 

@@ -31,6 +31,16 @@ class buyController {
         }   
     }
 
+    async findBuyDishes(req,res){
+        try{
+            var id = parseInt(req.params.id)
+            var Buy = await pool.query('SELECT dish.id_dish, dish.name_dish, dish.value_dish, dish.description_dish, dish.type_dish FROM buy_dish INNER JOIN buy ON buy_dish.fk_buy_id_buy=buy.id_buy INNER JOIN dish ON buy_dish.fk_dish_id_dish=dish.id_dish WHERE fk_buy_id_buy = $1;', [id])
+            return res.status(200).json(Buy["rows"]);
+        } catch (err) {
+            return res.status(400).json({ error: err.message });
+        }   
+    }
+
     async delBuy(req,res){
         try{
             var id = parseInt(req.params.id)
@@ -40,7 +50,6 @@ class buyController {
             return res.status(400).json({ error: err.message });
         }   
     }
-
     async addBuy(req,res){
         try{
             const {rating, value} = req.body 
@@ -51,7 +60,21 @@ class buyController {
             console.log(err)
             return res.status(400).json({ error: err.message });
         }   
-    }    
+    }
+
+    async addDishOnBuy(req,res){
+        try{
+            var id_buy = parseInt(req.params.id)
+            const {id_dish} = req.body
+            var Buy = await pool.query('INSERT INTO buy_dish(fk_buy_id_buy, fk_dish_id_dish) VALUES ($1, $2) RETURNING *;',[id_buy, id_dish]);
+            return res.status(200).json(Buy["rows"]);
+
+        } catch (err) {
+            console.log(err)
+            return res.status(400).json({ error: err.message });
+        }   
+    }
+
 
     async updBuy(req,res){
         try{

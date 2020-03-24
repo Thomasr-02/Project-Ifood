@@ -65,6 +65,18 @@ class userController {
         }   
     }
 
+    async addBuyOnUser(req,res){
+        try{
+            var id_person = parseInt(req.params.id)
+            const {id_buy} = req.body
+            var User = await pool.query('INSERT INTO person_buy(fk_buy_id_buy, fk_person_id_person) VALUES ($1, $2) RETURNING *;',[id_buy, id_person]);
+            return res.status(200).json(User["rows"]);
+        } catch (err) {
+            console.log(err)
+            return res.status(400).json({ error: err.message });
+        }   
+    }
+
     async updUser(req,res){
         try{
             const { id_person,first_name, last_name , email, password } = req.body            
