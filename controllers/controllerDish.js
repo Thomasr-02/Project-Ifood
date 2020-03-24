@@ -5,7 +5,7 @@ const express = require('express');
 
 const pool = require('../pool');
 
-class userController {
+class dishController {
     async findDishes(req, res) {       
         try {
             var Dish = await pool.query('SELECT * FROM dish INNER JOIN establishment ON dish.fk_establishment_id_establishment=establishment.id_establishment;');
@@ -72,4 +72,4 @@ class userController {
     }    
 }
 
-module.exports = new userController();
+module.exports = new dishController();
