@@ -13,6 +13,8 @@ const restaurantesRouter = require('./routes/restaurantes');
 const dishesRouter = require('./routes/dishes');
 const buysRouter = require('./routes/buys');
 const couponsRouter = require('./routes/coupons');
+const findProdOrRest = require('./routes/findProductOrRestaurante');
+
 
 const app = express();
 
@@ -38,7 +40,7 @@ app.use('/', restaurantesRouter);
 app.use('/', dishesRouter);
 app.use('/', buysRouter);
 app.use('/', couponsRouter);
-
+app.use('/', findProdOrRest);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
     next(createError(404));
