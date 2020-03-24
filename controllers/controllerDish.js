@@ -24,7 +24,13 @@ class userController {
         }   
     }
 
-    //falta selecionar todos os pratos de 1 restaurante
+    async listAllDishOneRestaurante(req,res){
+        try {
+
+        }catch(err) {
+            
+        }
+    }
 
     async delDish(req,res){
         try{
