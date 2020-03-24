@@ -20,6 +20,10 @@ class userController {
         }   
     }
 
+    findUserBuys(req, res) { 
+        console.log('teste!')
+    }
+
     async Authenticate(req,res){
         var email = (req.email);
         var password = (req.password);
