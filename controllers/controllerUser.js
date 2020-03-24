@@ -20,8 +20,14 @@ class userController {
         }   
     }
 
-    findUserBuys(req, res) { 
-        console.log('teste!')
+    async findUserBuys(req, res) { 
+        try{
+            var id = parseInt(req.params.id)
+            var User = await pool.query('SELECT * FROM person')
+            return res.status(200).json(User["rows"]);
+        } catch (err) {
+            return res.status(400).json({ error: err.message });
+        }   
     }
 
     async Authenticate(req,res){

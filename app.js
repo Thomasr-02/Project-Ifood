@@ -4,7 +4,7 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
-
+const { port } = require('./bin/www');
 
 /*rotas */
 const usersRouter = require('./routes/users');
@@ -42,20 +42,21 @@ app.use('/', buysRouter);
 app.use('/', couponsRouter);
 app.use('/', findProdOrRest);
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
     next(createError(404));
 });
 
 const pool = require('./pool');
 
-pool.connect(function(err) {
+pool.connect(function (err) {
     if (err) return console.log(err);
     console.log('conected database!');
 
 })
-console.log("Api rodando port 3000!");
+console.log('API Rodando na porta 3001!');
+
 //error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
     // set locals, only providing error in development
     res.locals.message = err.message;
     res.locals.error = req.app.get('env') === 'development' ? err : {};
