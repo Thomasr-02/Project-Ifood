@@ -23,7 +23,7 @@ class userController {
     async findUserBuys(req, res) { 
         try{
             var id = parseInt(req.params.id)
-            var User = await pool.query('SELECT * FROM person')
+            var User = await pool.query('SELECT buy.id_buy, person_buy.date, buy.rating, buy.value FROM person_buy INNER JOIN person ON person_buy.fk_person_id_person=person.id_person INNER JOIN buy ON person_buy.fk_buy_id_buy=buy.id_buy WHERE fk_person_id_person = $1;', [id])
             return res.status(200).json(User["rows"]);
         } catch (err) {
             return res.status(400).json({ error: err.message });
