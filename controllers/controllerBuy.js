@@ -65,8 +65,8 @@ class buyController {
     async addDishOnBuy(req,res){
         try{
             var id_buy = parseInt(req.params.id)
-            const {id_dish} = req.body
-            var Buy = await pool.query('INSERT INTO buy_dish(fk_buy_id_buy, fk_dish_id_dish) VALUES ($1, $2) RETURNING *;',[id_buy, id_dish]);
+            const {id_dish, date} = req.body
+            var Buy = await pool.query('INSERT INTO buy_dish(fk_buy_id_buy, fk_dish_id_dish, date) VALUES ($1, $2, $3) RETURNING *;',[id_buy, id_dish, date]);
             return res.status(200).json(Buy["rows"]);
 
         } catch (err) {
