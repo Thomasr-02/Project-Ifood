@@ -11,7 +11,7 @@ const pool = new Pool({
     database: 'postgres2'
 })
 
-class restauranteController {
+class couponController {
     async findCoupons(req, res) {       
         try {
             var Coupon = await pool.query('SELECT * FROM public.coupon;');
@@ -67,4 +67,4 @@ class restauranteController {
 }
 
 
-module.exports = new restauranteController();
+module.exports = new couponController();

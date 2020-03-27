@@ -20,6 +20,16 @@ class userController {
         }   
     }
 
+    async findUserBuys(req, res) { 
+        try{
+            var id = parseInt(req.params.id)
+            var User = await pool.query('SELECT buy.id_buy, person_buy.date, buy.rating, buy.value FROM person_buy INNER JOIN person ON person_buy.fk_person_id_person=person.id_person INNER JOIN buy ON person_buy.fk_buy_id_buy=buy.id_buy WHERE fk_person_id_person = $1;', [id])
+            return res.status(200).json(User["rows"]);
+        } catch (err) {
+            return res.status(400).json({ error: err.message });
+        }   
+    }
+
     async Authenticate(req,res){
         var email = (req.email);
         var password = (req.password);
@@ -49,6 +59,18 @@ class userController {
             var result = mergeJSON.merge(User["rows"], Adress["rows"]) ;
 
             return res.status(200).json(result);
+        } catch (err) {
+            console.log(err)
+            return res.status(400).json({ error: err.message });
+        }   
+    }
+
+    async addBuyOnUser(req,res){
+        try{
+            var id_person = parseInt(req.params.id)
+            const {id_buy} = req.body
+            var User = await pool.query('INSERT INTO person_buy(fk_buy_id_buy, fk_person_id_person) VALUES ($1, $2) RETURNING *;',[id_buy, id_person]);
+            return res.status(200).json(User["rows"]);
         } catch (err) {
             console.log(err)
             return res.status(400).json({ error: err.message });

@@ -30,6 +30,16 @@ class restauranteController {
         }   
     }
 
+    async findRestauranteDishes(req,res){
+        try{
+            var id = parseInt(req.params.id)
+            var Restaurante = await pool.query('SELECT dish.id_dish, dish.name_dish, dish.value_dish, dish.description_dish, dish.type_dish FROM dish INNER JOIN establishment ON dish.fk_establishment_id_establishment=establishment.id_establishment WHERE id_establishment = $1; ', [id])
+            return res.status(200).json(Restaurante["rows"]);
+        } catch (err) {
+            return res.status(400).json({ error: err.message });
+        }   
+    }
+
     async delRestaurante(req,res){
         try{
             var id = parseInt(req.params.id)
