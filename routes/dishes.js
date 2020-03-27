@@ -9,5 +9,6 @@ router.get('/dishes/:id', cors(),controllerDish.findOneDish);
 router.post('/dishes', cors(),controllerDish.addDish);
 router.delete('/dishes/:id', cors(),controllerDish.delDish);
 router.put('/dishes/:id', cors(), controllerDish.updDish);
+router.get('/dishOfRestaurantes/:id', cors(),controllerDish.listAllDishOneRestaurante);
 
 module.exports = router;

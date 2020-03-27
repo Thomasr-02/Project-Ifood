@@ -26,9 +26,11 @@ class userController {
 
     async listAllDishOneRestaurante(req,res){
         try {
-
-        }catch(err) {
-            
+          var id = parseInt(req.params.id)  
+          var list = await pool.query('SELECT * FROM dish INNER JOIN establishment ON dish.fk_establishment_id_establishment=establishment.id_establishment WHERE establishment.id_establishment = $1 ', [id])
+          return res.status(200).json(list['rows']);
+        } catch(err) {
+            return res.status(400).json({ error: err.message });
         }
     }
 
