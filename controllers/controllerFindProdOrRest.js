@@ -1,8 +1,3 @@
-const { Pool } = require('pg')
-const { Router } = require('express');
-const { check, validationResult } = require('express-validator');
-const express = require('express');
-
 const pool = require('../pool');
 
 class controllerFindProdOrRest {
