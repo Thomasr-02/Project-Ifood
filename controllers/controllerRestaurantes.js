@@ -79,10 +79,10 @@ class restauranteController {
     async findReportOne(req,res){
         try{
             var id = parseInt(req.params.id)
-            var Restaurante = await pool.query(
+            var Report = await pool.query(
                 'SELECT DISTINCT id_dish, name_dish, COUNT(id_dish) AS quantidade FROM buy_dish INNER JOIN buy ON buy_dish.fk_buy_id_buy=buy.id_buy INNER JOIN dish ON buy_dish.fk_dish_id_dish=dish.id_dish INNER JOIN establishment ON dish.fk_establishment_id_establishment=establishment.id_establishment WHERE id_establishment = $1 GROUP BY id_dish ORDER BY quantidade DESC;'
                 , [id])
-            return res.status(200).json(Restaurante["rows"]);
+            return res.status(200).json(Report["rows"]);
         } catch (err) {
             return res.status(400).json({ error: err.message });
         }   
@@ -92,13 +92,11 @@ class restauranteController {
         try{
             var id = parseInt(req.params.id)
             var days = parseInt(req.params.days)
-            console.log(id)
-            console.log(days)
-            var Restaurante = await pool.query(
-                //"SELECT NOW() - interval '$2 day'")
-                "SELECT * FROM buy_dish INNER JOIN buy ON buy_dish.fk_buy_id_buy=buy.id_buy INNER JOIN dish ON buy_dish.fk_dish_id_dish=dish.id_dish INNER JOIN establishment ON dish.fk_establishment_id_establishment=establishment.id_establishment WHERE id_establishment = $1 AND date >= NOW() - interval '$2 day' ORDER BY date DESC;"
-                , [id, days])
-            return res.status(200).json(Restaurante["rows"]);
+
+            var query = "SELECT * FROM buy_dish INNER JOIN buy ON buy_dish.fk_buy_id_buy=buy.id_buy INNER JOIN dish ON buy_dish.fk_dish_id_dish=dish.id_dish INNER JOIN establishment ON dish.fk_establishment_id_establishment=establishment.id_establishment WHERE id_establishment = " + id + " AND date >= NOW() - interval \'" + days +  " day\' ORDER BY date DESC;"
+            
+            var Report = await pool.query(query)
+            return res.status(200).json(Report["rows"]);
         } catch (err) {
             return res.status(400).json({ error: err.message });
         }   
@@ -107,10 +105,10 @@ class restauranteController {
     async findReportThree(req,res){
         try{
             var id = parseInt(req.params.id)
-            var Restaurante = await pool.query(
+            var Report = await pool.query(
                 'SELECT DISTINCT id_dish, name_dish, value_dish, AVG(value_dish) AS average FROM buy_dish INNER JOIN buy ON buy_dish.fk_buy_id_buy=buy.id_buy INNER JOIN dish ON buy_dish.fk_dish_id_dish=dish.id_dish INNER JOIN establishment ON dish.fk_establishment_id_establishment=establishment.id_establishment WHERE id_establishment = $1 GROUP BY id_dish ORDER BY id_dish'
                 , [id])
-            return res.status(200).json(Restaurante["rows"]);
+            return res.status(200).json(Report["rows"]);
         } catch (err) {
             return res.status(400).json({ error: err.message });
         }   
