@@ -10,5 +10,10 @@ router.delete('/restaurantes/:id', controllerRestaurantes.delRestaurante);
 router.put('/restaurantes/:id', controllerRestaurantes.updRestaurante);
 router.get('/restaurantes/:id/dishes',controllerRestaurantes.findRestauranteDishes)
 
+//relatorios
+router.get('/restaurantes/:id/reportone',controllerRestaurantes.findReportOne)
+router.get('/restaurantes/:id/reporttwo/:days',controllerRestaurantes.findReportTwo)
+router.get('/restaurantes/:id/reportthree',controllerRestaurantes.findReportThree)
+
 module.exports = router;
  
