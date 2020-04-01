@@ -4,9 +4,10 @@ class controllerFindProdOrRest {
 
     async findProductOrRestaurante(req,res){
         try{
-            var nome = req.params.name
-            var a = "' $1 '%"
-            var find = await pool.query("SELECT * FROM public.establishment join dish on establishment.id_establishment=dish.fk_establishment_id_establishment WHERE dish.name_dish=$1 or establishment.name_estab=$1", [nome])
+            var nome =  req.params.name+ '%'
+            console.log(nome)
+
+            var find = await pool.query('SELECT * FROM establishment join dish on establishment.id_establishment=dish.fk_establishment_id_establishment WHERE dish.name_dish LIKE $1 or establishment.name_estab LIKE $1', [nome])
             console.log(find)
             return res.status(200).json(find["rows"]);
         } catch (err) {
