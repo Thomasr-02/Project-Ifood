@@ -1,4 +1,3 @@
-
 const pool = require('../pool');
 
 class buyController {

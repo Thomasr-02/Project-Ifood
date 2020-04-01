@@ -12,7 +12,7 @@ CREATE TABLE person (
 CREATE TABLE establishment (
     id_establishment SERIAL PRIMARY KEY,
     name_estab VARCHAR(30),
-    delivery_fee FLOAT(20),
+    delivery_fee boolean,
     category VARCHAR(30),
     balance FLOAT(20),
     email VARCHAR(30),
