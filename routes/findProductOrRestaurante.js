@@ -4,7 +4,8 @@ var controllerFindProdOrRest = require('../controllers/controllerFindProdOrRest'
 /* GET dishs listing. */
 var cors = require('cors')
 
-router.get('/findProductOrRestaurante/:name', cors(),controllerFindProdOrRest.findProductOrRestaurante);
+router.get('/findRestaurante/:rest', cors(),controllerFindProdOrRest.findRestauranteByName);
+router.get('/findProduct/:dish', cors(),controllerFindProdOrRest.findDishByName);
 router.get('/findProductOrRestaurante/', cors(),controllerFindProdOrRest.ListOrProductRestaurante);
 
 module.exports = router;
