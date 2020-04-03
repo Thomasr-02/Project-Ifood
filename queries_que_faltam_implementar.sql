@@ -22,7 +22,7 @@ um restaurante é listado no critério promoção se o
 preço de pelo menos uma comida está com desconto de pelo menos 50%
 com relação ao preço médio dos 7 dias anteriores.*/
 
-/*seleciona o preço medio dos ultimos 7 dias (falta fazer uma comparação se tem algum prato com 50%)*/
+/*seleciona o preço medio dos ultimos 7 dias (falta fazer uma comparação se esta com 50%)*/
 
 SELECT id_dish, AVG(value_dish) AS average_price FROM buy_dish
 INNER JOIN buy ON buy_dish.fk_buy_id_buy=buy.id_buy 
