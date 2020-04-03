@@ -66,9 +66,9 @@ class restauranteController {
     async updRestaurante(req,res){
         try{
             const  id_establishment = parseInt(req.params.id)
-            const { delivery_fee } = req.body            
-            var Restaurante = await pool.query('UPDATE establishment SET delivery_fee=$1 WHERE id_establishment = $2 RETURNING *',
-                [ delivery_fee, id_establishment]);
+            const { delivery_fee, status } = req.body            
+            var Restaurante = await pool.query('UPDATE establishment SET delivery_fee=$1, status=$2 WHERE id_establishment = $3 RETURNING *',
+                [ delivery_fee, status, id_establishment]);
             return res.status(200).json(Restaurante.rows);
         } catch (err) {
             console.log(err)

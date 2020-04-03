@@ -13,6 +13,7 @@ CREATE TABLE establishment (
     id_establishment SERIAL PRIMARY KEY,
     name_estab VARCHAR(30),
     delivery_fee boolean,
+    status boolean,
     category VARCHAR(30),
     balance FLOAT(20),
     email VARCHAR(30),
