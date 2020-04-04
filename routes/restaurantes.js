@@ -17,7 +17,7 @@ router.get('/restaurantes/:id/reportthree',controllerRestaurantes.findReportThre
 
 //categorizacao e criterios dinamicos
 router.get('/restaurantes/mostpopular',controllerRestaurantes.findMostPopular)
-router.get('/restaurantes/bestcheap',controllerRestaurantes.findCheapRestaurants)
+router.get('/restaurantes/bestcheap/:id',controllerRestaurantes.findCheapRestaurants)
 
 module.exports = router;
  

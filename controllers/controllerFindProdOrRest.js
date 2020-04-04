@@ -5,7 +5,7 @@ class controllerFindProdOrRest {
     async findRestauranteByName (req,res){
         try{
             var  name_estab =  req.params.rest 
-            name_estab = name_estab + '%'
+            name_estab = '%'+name_estab + '%'
             
             var find = await pool.query('SELECT * FROM establishment WHERE establishment.name_estab LIKE $1', [name_estab])
             console.log(find)
@@ -26,7 +26,7 @@ class controllerFindProdOrRest {
     async findDishByName (req, res) {       
         var  name_dish   = req.params.dish
 
-        name_dish = name_dish + '%'
+        name_dish = '%' + name_dish + '%'
         console.log(name_dish)
         try {
             var find = await pool.query('SELECT * FROM establishment join dish on establishment.id_establishment=dish.fk_establishment_id_establishment WHERE dish.name_dish LIKE $1', [name_dish]);
@@ -40,8 +40,3 @@ class controllerFindProdOrRest {
 }
 
 module.exports = new controllerFindProdOrRest();
-
-
-    
-    
-       

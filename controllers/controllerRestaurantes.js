@@ -117,8 +117,9 @@ class restauranteController {
 
     async findMostPopular(req, res) {       
         try {
-            var id = parseInt(req.params.id)
+            // var id = parseInt(req.params.id)
             var Restaurante = await pool.query('SELECT DISTINCT id_dish, name_dish, establishment.name_estab, COUNT(*) AS quantidade FROM buy_dish INNER JOIN buy ON buy_dish.fk_buy_id_buy=buy.id_buy INNER JOIN dish ON buy_dish.fk_dish_id_dish=dish.id_dish INNER JOIN establishment ON dish.fk_establishment_id_establishment=establishment.id_establishment GROUP BY id_dish, establishment.name_estab ORDER BY quantidade DESC LIMIT 5;');
+            console.log(Restaurante)
             return res.status(200).json(Restaurante["rows"]);
         } catch (err) {
             return res.status(400).json({ error: err.message });
