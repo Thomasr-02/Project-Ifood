@@ -58,9 +58,10 @@ class dishController {
 
     async updDish(req,res){
         try{
-            const { type_dish, name_dish, value_dish, description_dish } = req.body            
-            var Dish = await pool.query('UPDATE dish SET type_dish = $2, name_dish = $3, value_dish = $4, description_dish = $5 WHERE id_dish = $1 RETURNING *',
-                [type_dish, name_dish, value_dish, description_dish]);
+            var id = req.params.id
+            const { value_dish } = req.body            
+            var Dish = await pool.query('UPDATE dish SET value_dish = $1 WHERE id_dish = $2 RETURNING *',
+                [value_dish, id]);
             return res.status(200).json(Dish.rows);
         } catch (err) {
             console.log(err)

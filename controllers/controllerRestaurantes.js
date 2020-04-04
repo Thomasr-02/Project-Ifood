@@ -94,7 +94,7 @@ class restauranteController {
             var id = parseInt(req.params.id)
             var days = parseInt(req.params.days)
 
-            var query = "SELECT * FROM buy_dish INNER JOIN buy ON buy_dish.fk_buy_id_buy=buy.id_buy INNER JOIN dish ON buy_dish.fk_dish_id_dish=dish.id_dish INNER JOIN establishment ON dish.fk_establishment_id_establishment=establishment.id_establishment WHERE id_establishment = " + id + " AND date >= NOW() - interval \'" + days +  " day\' ORDER BY date DESC;"
+            var query = ("SELECT * FROM buy_dish INNER JOIN buy ON buy_dish.fk_buy_id_buy=buy.id_buy INNER JOIN dish ON buy_dish.fk_dish_id_dish=dish.id_dish INNER JOIN establishment ON dish.fk_establishment_id_establishment=establishment.id_establishment WHERE id_establishment = " + id + " AND date >= NOW() - interval \'" + days +  " day\' ORDER BY date DESC;")
             
             var Report = await pool.query(query)
             return res.status(200).json(Report["rows"]);
@@ -107,7 +107,7 @@ class restauranteController {
         try{
             var id = parseInt(req.params.id)
             var Report = await pool.query(
-                'SELECT DISTINCT id_dish, name_dish, value_dish, AVG(value_dish) AS average FROM buy_dish INNER JOIN buy ON buy_dish.fk_buy_id_buy=buy.id_buy INNER JOIN dish ON buy_dish.fk_dish_id_dish=dish.id_dish INNER JOIN establishment ON dish.fk_establishment_id_establishment=establishment.id_establishment WHERE id_establishment = $1 GROUP BY id_dish ORDER BY id_dish'
+                'SELECT id_dish, name_dish, value_dish, AVG(value) as average FROM dish INNER JOIN buy_dish ON buy_dish.fk_dish_id_dish=dish.id_dish INNER JOIN buy ON buy.id_buy=buy_dish.fk_buy_id_buy INNER JOIN establishment ON dish.fk_establishment_id_establishment=establishment.id_establishment WHERE id_establishment = $1 group by 1'
                 , [id])
             return res.status(200).json(Report["rows"]);
         } catch (err) {
